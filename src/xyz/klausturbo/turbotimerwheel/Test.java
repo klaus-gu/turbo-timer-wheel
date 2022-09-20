@@ -17,14 +17,13 @@ public class Test {
         AtomicInteger count = new AtomicInteger(0);
     
         for (int i = 1; i <= 1000; i++) {
-            int finalI = i;
-            TurboTimerTask task = new TurboTimerTask(i, () -> {
+            TurboTimerTask task = new TurboTimerTask(i*20, () -> {
+                count.getAndIncrement();
                 countDownLatch.countDown();
-                System.out.println(finalI +" == 开始执行 == "+(count.incrementAndGet()));
             });
             driver.addTask(task);
         }
-        countDownLatch.await(5, TimeUnit.SECONDS);
+        countDownLatch.await(30, TimeUnit.SECONDS);
         System.out.println(count);
     }
 }
